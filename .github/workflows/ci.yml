@@ -47,9 +47,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # 4.1) Lint with flake8
+      # Installs flake8 and checks code style across the repository.
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
       # 5) Run tests
       # Set PYTHONPATH so your repository root can be imported and run pytest.
       - name: Run tests
         run: |
           export PYTHONPATH=$PWD
           pytest --maxfail=5 --disable-warnings
+
+      # 6) Test coverage
+      # Installs pytest-cov and runs pytest with coverage reporting for the app package.
+      - name: Test coverage
+        run: |
+          pip install pytest-cov
+          export PYTHONPATH=$PWD
+          pytest --cov=app tests/
